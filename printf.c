@@ -7,10 +7,23 @@
 */
 int _printf(const char *format, ...)
 {
+int count;
+conversion_t c_list[] = {
+{"c", print_char},
+{"s", print_string},
+{"%", print_percent},
+{"d", print_integer},
+{"i", print_integer},
+{NULL, NULL}
+};
 va_list args;
-int done;
+
+if (format == NULL)
+return (-1);
+
 va_start(args, format);
 
-done = vfprintf(stdout, format, args);
+count = executor(format, c_list, args);
 va_end(args);
+return (count);
 }
